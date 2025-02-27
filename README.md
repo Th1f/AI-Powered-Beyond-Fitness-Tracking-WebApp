@@ -16,8 +16,12 @@
   - Framework: React + Vite
   - Authentication: Firebase Authentication
 - Credentials Management: Firebase Credentials
+- Language Used
+  - Python: Backend
+  - HTML,CSS,TS: Frontend
+  - noSql: Firestore
 
-Beyond - Fitness Tracking Web Application is a modern, scalable solution designed to help users monitor their fitness routines, track progress, and generate workouts efficiently. Built with a **_firebase_** infrastructure secure **_authentication_**, robust and **_decoupled architecture_**, it combines the flexibility of **_Python and Flask_** on the backend with the dynamic user interface of **_React_** on the frontend. 
+Beyond - Fitness Tracking Web Application is a **_AI powered_** modern, scalable solution designed to help users monitor their fitness routines, track progress, and generate workouts efficiently. Built with a **_firebase_** infrastructure secure **_authentication_**, robust and **_decoupled architecture_**, it combines the flexibility of **_Python and Flask_** on the backend with the dynamic user interface of **_React_** on the frontend entangled with a **_noSQL_** database of Firestore Database. 
 
 > [!NOTE]
 > **_You can check out my live demo [here](https://gymapp-d2c36.web.app/)._**

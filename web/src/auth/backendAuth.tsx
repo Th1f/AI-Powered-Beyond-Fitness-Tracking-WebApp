@@ -1,6 +1,6 @@
 import { auth } from "../config/firebase";
 
-const BACKEND_URL = "https://irv145.pythonanywhere.com"
+const BACKEND_URL = ""
 
 export interface workoutInfo{
   active_time: number;

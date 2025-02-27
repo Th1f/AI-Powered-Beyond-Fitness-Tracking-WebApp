@@ -1,0 +1,10 @@
+.macro-default-content {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+  gap: .5rem;
+}
+
+.macro-content h3 {
+  margin: 0;
+}

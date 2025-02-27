@@ -1,0 +1,34 @@
+.macro-content {
+  display: flex;
+  padding: .5rem 0;
+  gap: .5rem;
+  align-items: center;
+  justify-content: space-between
+}
+
+.macro-content h3 {
+  margin: 0;
+}
+
+@media (max-width: 769px) {
+  .macro-content {
+    display: flex;
+    flex-direction: column;
+    padding: .5rem 0;
+    gap: .5rem;
+    align-items: center;
+    justify-content: space-between
+  }
+  .card-container {
+    padding: 0;
+  }
+
+  .card.card-bot{
+    margin: 0;
+  }
+
+  .card.physical-activity{
+    margin: 0;
+  }
+
+}

@@ -1,0 +1,8 @@
+flask
+flask-login
+flask-cors
+firebase-admin
+werkzeug
+schedule
+requests
+google-generativeai

@@ -1,0 +1,40 @@
+.diet-main-card-container{
+    display: flex;
+    padding: 1rem 0;
+}
+
+.diet-top-container{
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    gap: 1rem;
+}
+
+.calorie-left-container{
+    width: 40%;
+}
+
+.history-container{
+    width: 75%;
+    padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+    .diet-main-card-container{
+        flex-direction: column;
+    }
+
+    .diet-top-container{
+        width: 100%;
+        gap: 1rem;
+    }
+
+    .calorie-left-container{
+        width: 100%;
+    }
+
+    .history-container{
+        width: 100%;
+        padding: 1rem 0 0 0;
+    }
+}

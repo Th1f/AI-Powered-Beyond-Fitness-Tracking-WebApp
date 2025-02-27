@@ -1,0 +1,163 @@
+.food-history-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  color: #e0e0e0;
+}
+
+.food-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  flex-shrink: 0;
+}
+
+.food-history-header h2 {
+  margin: 0;
+}
+
+.food-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  max-height: 650px;
+  padding-right: 0.5rem; /* Space for scrollbar */
+  word-wrap: break-word; /* Ensure long text doesn't cause horizontal scroll */
+  white-space: normal; /* Allow text to wrap */
+}
+
+.food-history-list::-webkit-scrollbar {
+  width: 8px; /* Thin scrollbar */
+}
+
+.food-history-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); /* Subtle track color */
+  border-radius: 10px;
+}
+
+.food-history-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3); /* Semi-transparent thumb */
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.food-history-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5); /* Lighter on hover */
+}
+
+.food-history-list::-webkit-scrollbar-horizontal {
+  display: none;
+}
+
+/* Fallback for Firefox and others */
+.food-history-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+}
+
+.no-history {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+.food-history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  padding: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+  border: 1px solid #333;
+}
+
+.food-history-item:hover {
+  transform: scale(1.02);
+  background-color: var(--neutral-200);
+}
+
+.food-item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.food-item-name {
+  font-weight: 600;
+  color: #f0f0f0;
+  text-align: center;
+}
+
+.food-item-timestamp {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.food-item-macros {
+  display: flex;
+  gap: 0.5rem;
+  color: #ddd;
+  font-size: 0.9rem;
+}
+
+.food-item-macros span {
+  background-color: #3a3a3a;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  color: #e0e0e0;
+}
+
+.food-history-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5rem;
+  flex-shrink: 0;
+}
+
+.clear-history-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.clear-history-btn:hover {
+  background-color: #ff6666;
+}
+
+.clear-history-btn:active {
+  background-color: #ff3333;
+}
+
+.add-food-btn {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.add-food-btn:hover {
+  background-color: #45a049;
+}
+
+.add-food-btn:active {
+  background-color: #3d8b40;
+}

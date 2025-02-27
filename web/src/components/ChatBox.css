@@ -66,7 +66,7 @@
   scroll-behavior: smooth;
 }
 
-/* Webkit browsers (Chrome, Safari, newer Edge) */
+
 .chat-messages::-webkit-scrollbar {
   width: 6px;
 }
@@ -153,7 +153,6 @@
   }
 }
 
-/* Disable chat input and button while loading */
 .chat-input:disabled {
   background-color: #f5f5f5;
   cursor: not-allowed;

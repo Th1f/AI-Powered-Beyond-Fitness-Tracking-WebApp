@@ -1,7 +1,33 @@
 import { auth } from "../config/firebase";
 
-const BACKEND_URL = "http://127.0.0.1:5000"
-//https://irv145.pythonanywhere.com"
+const BACKEND_URL = "https://irv145.pythonanywhere.com"
+
+export interface workoutInfo{
+  active_time: number;
+  calories_burned: number;
+  schedule:[];
+  steps: number;
+  todays_exercise:TodayExcercise;
+}
+
+export interface workoutRequestInfo{
+  split: string;
+  split_rotation: string[];
+}
+
+export interface TodayExcercise{
+  exercises: [exerciseInfo];
+}
+
+export interface exerciseInfo{
+  calorie: number;
+  exercises_type: string;
+  id: string;
+  name: string;
+  reps: string;
+  sets: number; 
+  desc: string;
+}
 
 
 export interface addFoodDescription{
@@ -76,7 +102,6 @@ export interface UserData {
 
 export const verifyTokenWithBackend = async () => {
   try {
-
     const user = auth.currentUser;
     if (!user) {
       console.error("No user logged in");
@@ -113,7 +138,6 @@ export const verifyTokenWithBackend = async () => {
     throw error;
   }
 };
-
 
 export const createUserInBackend = async (username: string) => {
   try {
@@ -223,8 +247,38 @@ export const fetchDetailedUserProfile = async (): Promise<UserProfile> => {
   }
 };
 
+export const completeTodaysWorkout = async () => {
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            throw new Error("No user logged in");
+        }
 
-export const addWorkout = async (workoutData: any): Promise<string> => {
+        const token = await user.getIdToken();
+
+        const response = await fetch(`${BACKEND_URL}/todays-exercise-completion`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || result.status !== "success") {
+            throw new Error(result.message || "Failed to complete today's workout");
+        }
+
+        return result;
+    } catch (error) {
+        console.error("Error completing today's workout:", error);
+        throw error;
+    }
+}
+
+
+export const generateWorkoutPlan = async (workoutData: workoutRequestInfo): Promise<string> => {
   try {
     const user = auth.currentUser;
     if (!user) {
@@ -233,7 +287,7 @@ export const addWorkout = async (workoutData: any): Promise<string> => {
 
     const token = await user.getIdToken();
 
-    const response = await fetch(`${BACKEND_URL}/add-workout`, {
+    const response = await fetch(`${BACKEND_URL}/generate-workout-plan`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -242,13 +296,8 @@ export const addWorkout = async (workoutData: any): Promise<string> => {
       body: JSON.stringify({ workout: workoutData }),
     });
 
-    const result = await response.json();
-
-    if (result.status !== "success") {
-      throw new Error(result.message || "Failed to add workout");
-    }
-
-    return result.workout_id;
+    const result = await response.json()
+    return result;
   } catch (error) {
     console.error("Error adding workout:", error);
     throw error;
@@ -383,6 +432,35 @@ export const fetchUserData = async (): Promise<UserData> => {
   }
 };
 
+export const fetchUserWorkoutData = async (): Promise<workoutInfo> => {
+  try {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error("No user logged in");
+    }
+
+    const token = await user.getIdToken();
+
+    const response = await fetch(`${BACKEND_URL}/get-workouts`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const result = await response.json();
+
+    if (result.status !== "success") {
+      throw new Error(result.message || "Failed to fetch user data");
+    }
+    return result;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
+
 export const SendAImessage = async (message : AImessage) =>{
   try {
     const user = auth.currentUser;
@@ -406,7 +484,6 @@ export const SendAImessage = async (message : AImessage) =>{
     });
 
     const result = await response.json();
-    console.log(result);
     return result
     
   } catch (error) {

@@ -154,9 +154,24 @@ function App() {
         <main className="main-content">
           <Routes>
            
-            <Route path="/" element={<Landing />} />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/signup" element={<SignUp />} />
+            <Route 
+              path="/" 
+              element={
+                isLoggedIn ? <Navigate to="/dashboard" replace /> : <Landing />
+              } 
+            />
+            <Route 
+              path="/login" 
+              element={
+                isLoggedIn ? <Navigate to="/dashboard" replace /> : <Login onLogin={handleLogin} />
+              } 
+            />
+            <Route 
+              path="/signup" 
+              element={
+                isLoggedIn ? <Navigate to="/dashboard" replace /> : <SignUp />
+              } 
+            />
 
             <Route
               path="/dashboard"
@@ -193,9 +208,7 @@ function App() {
             <Route
               path="/profile-setup"
               element={
-                <ProtectedRoute>
-                  <ProfileSetup />
-                </ProtectedRoute>
+                isLoggedIn ? <Navigate to="/dashboard" replace /> : <ProfileSetup />
               }
             />
             <Route path="*" element={<Navigate to="/" replace />} />

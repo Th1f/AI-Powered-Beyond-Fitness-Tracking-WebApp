@@ -8,8 +8,6 @@ interface MacroCardProps {
   fat: number | undefined;
 }
 
-console.log("MacroCardDefault");
-
 function handleMacros(macro: number) {
   if (macro > 200) {
     return 200;

@@ -16,7 +16,7 @@
   overflow-x: hidden;
 }
 
-/* Hero Section */
+
 .hero-section {
   display: flex;
   align-items: center;
@@ -116,7 +116,6 @@
   }
 }
 
-/* CTA Buttons */
 .cta-button {
   display: inline-block;
   padding: 1rem 2rem;
@@ -243,7 +242,7 @@
   line-height: 1.6;
 }
 
-/* Testimonial Section */
+
 .testimonial-section {
   padding: 6rem 2rem;
   background: linear-gradient(
@@ -275,7 +274,7 @@ cite {
   font-style: normal;
 }
 
-/* Final CTA Section */
+
 .final-cta-section {
   padding: 8rem 2rem;
   text-align: center;

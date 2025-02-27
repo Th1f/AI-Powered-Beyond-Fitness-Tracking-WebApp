@@ -1,11 +1,11 @@
 :root {
   /* Primary Colors */
-  --primary-color: #6366f1;      /* Indigo */
+  --primary-color: #6366f1;      
   --primary-color-light: #818cf8;
   --primary-color-dark: #4f46e5;
 
   /* Accent Colors */
-  --accent-color: #06b6d4;       /* Bright Cyan */
+  --accent-color: #06b6d4;      
   --accent-color-light: #22d3ee;
   --accent-color-dark: #0891b2;
 
@@ -27,9 +27,9 @@
   --text-light: var(--neutral-500);
 
   /* Semantic Colors */
-  --success-color: #10b981;      /* Emerald */
-  --warning-color: #f59e0b;      /* Amber */
-  --error-color: #ef4444;        /* Red */
+  --success-color: #10b981;      
+  --warning-color: #f59e0b;      
+  --error-color: #ef4444;        
 
   /* Initial theme */
   --bg-color: var(--neutral-50);
@@ -41,11 +41,11 @@
 
 /* Dark Mode */
 .dark-mode {
-  --primary-color: #818cf8;      /* Brighter Indigo */
+  --primary-color: #818cf8;      
   --primary-color-light: #a5b4fc;
   --primary-color-dark: #6366f1;
 
-  --bg-color: #0f172a;           /* Darker background */
+  --bg-color: #0f172a;           
   --text-color: #f8fafc;
   --text-secondary: #e2e8f0;
   --text-light: #94a3b8;
@@ -61,14 +61,30 @@
   --neutral-800: #f1f5f9;
   --neutral-900: #f8fafc;
 
-  --card-bg: rgba(30, 41, 59, 0.7);   /* Slightly transparent dark blue */
+  --card-bg: rgba(30, 41, 59, 0.7);   
   --card-border: #334155;
   --nav-link: #f8fafc;
 
   /* Additional accent colors for dark mode */
-  --accent-gradient-1: #06b6d4;  /* Cyan */
-  --accent-gradient-2: #818cf8;  /* Indigo */
-  --accent-gradient-3: #10b981;  /* Emerald */
+  --accent-gradient-1: #06b6d4;      
+  --accent-gradient-2: #818cf8;      
+  --accent-gradient-3: #10b981;      
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+  transition: background-color 0.3s, color 0.3s;
+  -webkit-overflow-scrolling: touch; 
 }
 
 * {
@@ -78,18 +94,23 @@
   transition: all 0.3s ease;
 }
 
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
-  line-height: 1.6;
-  transition: background-color 0.3s, color 0.3s;
-}
-
 .app-container {
   display: flex;
   min-height: 100vh;
+  height: 100%;
   background-color: var(--bg-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  background-color: var(--bg-color);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 100vh;
+  position: relative;
 }
 
 .sidebar {
@@ -190,16 +211,23 @@ body {
   transform: translateX(-50%) scale(1.05);
 }
 
-.main-content {
-  flex-grow: 1;
-  padding: 2rem;
-  background-color: var(--bg-color);
-  overflow-y: auto;
-  transition: padding-left 0.3s;
-}
-
-.main-content.logged-out {
-  padding: 0;
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+    height: auto; 
+    padding-bottom: 80px; 
+  }
+  
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1000;
+    background-color: var(--card-bg);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  }
 }
 
 /* Hero Section */
@@ -466,9 +494,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  .app-container {
-    flex-direction: column;
-  }
   
   .sidebar {
     width: 100%;
@@ -602,12 +627,15 @@ body {
   }
 }
 
-/* Mobile Menu Styles */
+
 .mobile-menu-toggle {
   display: none;
 }
 
 @media (max-width: 768px) {
+  .main-content{
+    margin: 2rem 0 2rem 0;
+  }
   .mobile-menu-toggle {
     display: block;
     position: fixed;
@@ -632,7 +660,6 @@ body {
   }
 }
 
-/* Mobile Navigation Styles */
 .sidebar {
   position: fixed;
   top: 0;
@@ -717,7 +744,7 @@ body {
   }
 }
 
-/* Desktop Styles */
+
 @media (min-width: 769px) {
   .sidebar {
     width: fit-content;
@@ -841,7 +868,7 @@ body {
   }
 }
 
-/* Mobile Navigation Styles */
+
 .sidebar {
   width: fit-content;
   position: fixed;
@@ -886,7 +913,7 @@ body {
   color: #333;
 }
 
-/* Hamburger Menu */
+
 .hamburger-menu {
   display: none;
 }

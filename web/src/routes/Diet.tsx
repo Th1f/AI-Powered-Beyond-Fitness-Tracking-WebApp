@@ -32,7 +32,6 @@ function Diet() {
         setIsLoading(true);
         setError(null);
         const data = await fetchUserData();
-        console.log("data fetched");
         setUserData(data);
 
         const initialFoodHistory = (data?.user.diet_info?.food_eaten ?? []).map(
@@ -95,11 +94,6 @@ function Diet() {
   }
 
   const caloriesLeft = userData?.user.diet_info?.calories_left ?? 2000;
-  console.log(
-    userData?.user.diet_info?.proteins,
-    userData?.user.diet_info?.carbs,
-    userData?.user.diet_info?.fats
-  );
   return isLoading ? (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
       <Loading />

@@ -46,7 +46,6 @@ function FoodHistory({ foodHistory, onAdd }: FoodHistoryProps) {
       timestamp: Date.now()
     }
     setOpen(false);
-    console.log(newFood);
     if (onAdd) {
       onAdd(newFood);
     }

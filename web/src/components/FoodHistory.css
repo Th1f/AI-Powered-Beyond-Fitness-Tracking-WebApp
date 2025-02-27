@@ -24,37 +24,37 @@
   gap: 0.75rem;
   flex-grow: 1;
   overflow-y: auto;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-x: hidden; 
   max-height: 650px;
-  padding-right: 0.5rem; /* Space for scrollbar */
-  word-wrap: break-word; /* Ensure long text doesn't cause horizontal scroll */
-  white-space: normal; /* Allow text to wrap */
+  padding-right: 0.5rem;
+  word-wrap: break-word; 
+  white-space: normal; 
 }
 
 .food-history-list::-webkit-scrollbar {
-  width: 8px; /* Thin scrollbar */
+  width: 8px; 
 }
 
 .food-history-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1); /* Subtle track color */
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
 }
 
 .food-history-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3); /* Semi-transparent thumb */
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   transition: background 0.3s ease;
 }
 
 .food-history-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5); /* Lighter on hover */
+  background: rgba(255, 255, 255, 0.5); 
 }
 
 .food-history-list::-webkit-scrollbar-horizontal {
   display: none;
 }
 
-/* Fallback for Firefox and others */
+
 .food-history-list {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
@@ -160,4 +160,10 @@
 
 .add-food-btn:active {
   background-color: #3d8b40;
+}
+
+@media (max-width: 768px) {
+  .food-history-container{
+    margin: 0 0 2rem 0;
+  }
 }

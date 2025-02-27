@@ -1,4 +1,4 @@
-/* Import dashboard styles */
+
 @import './Dashboard.css';
 
 .profile-container {
@@ -213,6 +213,11 @@
 @media (max-width: 768px) {
   .profile-content {
     grid-template-columns: 1fr;
+  }
+
+  .stats-grid{
+    display: flex;
+    flex-direction: column;
   }
 
   .profile-header {

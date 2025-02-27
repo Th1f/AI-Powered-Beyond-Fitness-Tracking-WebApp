@@ -89,6 +89,39 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s ease;
+}
+
+.exercises-list::-webkit-scrollbar {
+  width: 1px;
+  background: transparent;
+}
+
+.exercises-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.exercises-list::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 40px;
+}
+
+.exercises-list:hover {
+  scrollbar-color: rgba(100, 108, 255, 0.5) transparent;
+}
+
+.exercises-list:hover::-webkit-scrollbar-thumb {
+  background: rgba(100, 108, 255, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.exercises-list:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 108, 255, 0.8);
 }
 
 .exercise-item {
@@ -153,7 +186,28 @@
   color: #22c55e;
 }
 
+.complete-workout-button {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+.complete-workout-button:hover {
+  background-color: #16a34a;
+}
+
+.complete-workout-button:focus {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
 
 .calories-summary {
   display: flex;
@@ -203,7 +257,29 @@
   font-weight: normal;
 }
 
-/* Responsive adjustments */
+.no-exercises-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.no-exercises-container h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.no-exercises-container p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+
 @media (max-width: 768px) {
   .exercise-card {
     padding: 1rem;
@@ -228,6 +304,5 @@
   .calories-text {
     align-items: center;
   }
-
   
 }

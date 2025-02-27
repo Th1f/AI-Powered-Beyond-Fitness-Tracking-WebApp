@@ -16,7 +16,7 @@ from google import genai
 import json
 from google.genai import types
 
-aiClient = genai.Client(api_key="AIzaSyBTDKQUhoNwYJO3RisJzMgYHJRKdbFPg3Y")
+aiClient = genai.Client(api_key="your_api_key")
 try:
     firebase_cred_path = os.environ.get('FIREBASE_CREDENTIALS', 'firebase-credentials.json')
     
@@ -185,6 +185,10 @@ def create_user():
             },
 
             'exercise_info':{
+                'schedule': [],
+                'todays_exercise':{
+                    'exercises':[]
+                },
                 'steps': random.randint(0, 20000),
                 'calories_burned': random.randint(0, 2000),
                 'active_time': random.randint(0, 20000)
@@ -233,15 +237,133 @@ def update_user():
 def send_ai_chat():
     try:
         data = request.json
-        print(data['message'])
+        user_id = current_user.id
+        message = data['message']
+        chat_ref = db.collection('user_chats').document(user_id)
+        chat_doc = chat_ref.get()
+        
+        if not chat_doc.exists:
+            chat_ref.set({'messages': []})
+            chat_history = []
+        else:
+            chat_history = chat_doc.to_dict().get('messages', [])
+        
+        chat_history.append({'role': 'user', 'content': message})
         instruction = open("ai.txt", "r").read()
-        print(instruction)
-        response = aiClient.models.generate_content(model="gemini-1.5-flash-001", config= types.GenerateContentConfig(system_instruction=instruction),contents=data['message'])
-        return json.loads(response.text)
+        chat_context = ""
+        for msg in chat_history[-10:]: 
+            chat_context += f"{'User' if msg['role'] == 'user' else 'Assistant'}: {msg['content']}\n"
+        full_prompt = f"{chat_context}\nUser: {message}"
+        
+        response = aiClient.models.generate_content(
+            model="gemini-1.5-flash-001",
+            config=types.GenerateContentConfig(system_instruction=instruction),
+            contents=full_prompt
+        )
+        
+        ai_response = json.loads(response.text)
+        chat_history.append({'role': 'assistant', 'content': ai_response})
+        
+        chat_ref.update({'messages': chat_history})
+        
+        return ai_response
+    except Exception as e:
+        print(f"Error in send_ai_chat: {e}")
+        return jsonify({"error": "An error occurred processing your request"}), 500
+
+@app.route('/generate-workout-plan' , methods=['POST'])
+@firebase_login_required
+def generate_workout_plan():
+    try:
+        data = request.json
+        instruction = open("ai.txt", "r").read()
+        workoutRotation = generateWorkoutPlan(data)
+        
+       
+        user_ref = db.collection('users').document(current_user.id)
+        
+      
+        first_day = workoutRotation.json[0] if workoutRotation.json else {'exercises': []}
+        
+        
+        for i, exercise in enumerate(first_day['exercises']):
+            if 'id' not in exercise:
+                exercise['id'] = f"{exercise['exercises_type'].lower()}-{i+1}"
+        
+        
+        user_ref.update({
+            'exercise_info': {
+                'schedule': workoutRotation.json,  
+                'todays_exercise': {
+                    'exercises': first_day['exercises']
+                },
+            }
+        })
+        
+        return workoutRotation
     except Exception as e:
         print(e)
-        return "you are retarded"
+        return jsonify({"error": "An error occurred processing your request"}), 500
+
+def generateWorkoutPlan(workoutData):
+    gymInstruction = open("workout.txt", "r").read()
+    exercise = []
+    print("here")
+    print(workoutData['workout']['split_rotation'])
+    for x in workoutData['workout']['split_rotation']:
+        print(x)
+        if(x == "REST"):
+            continue
+        response = aiClient.models.generate_content(
+        model="gemini-1.5-flash-001",
+        contents=gymInstruction +"\nWorkout SPLIT: " + x,
+        config=types.GenerateContentConfig(
+            max_output_tokens=1024,
+            temperature=0.1
+        ),
+        )
+        exercise.append(json.loads(response.text))
     
+    print(exercise)
+    return jsonify( exercise)
+
+@app.route('/todays-exercise-completion', methods=['PUT'])
+@firebase_login_required
+def todays_exercise_completion():
+    try:
+        user_ref = db.collection('users').document(current_user.id)
+        user_doc = user_ref.get()
+        
+        if not user_doc.exists:
+            return jsonify({"status": "error", "message": "User not found"}), 404
+        
+        user_data = user_doc.to_dict()
+        exercise_info = user_data.get('exercise_info', {})
+        schedule = exercise_info.get('schedule', [])
+        todays_exercise = exercise_info.get('todays_exercise', {})
+
+        print(schedule)
+        
+        
+        current_index = schedule.index(todays_exercise) if todays_exercise in schedule else -1
+        next_index = (current_index + 1) % len(schedule) if schedule else current_index
+        
+        user_ref.update({
+            'exercise_info': {
+                'schedule': schedule,
+                'todays_exercise': schedule[next_index]
+            }
+        })
+        
+        return jsonify({
+            "status": "success", 
+            "message": "Today's exercise shifted to the next one"
+        })
+    except Exception as e:
+        print(f"Error shifting today's exercise: {e}")
+        return jsonify({"status": "error", "message": "Failed to shift today's exercise"}), 500
+   
+
 
 @app.route('/user-profile')
 @firebase_login_required
@@ -401,59 +523,37 @@ def get_detailed_user_profile():
             "message": "Failed to fetch user profile"
         }), 500
 
-@app.route('/add-workout', methods=['POST'])
-@firebase_login_required
-def add_workout():
-    data = request.json
-    
-    try:
-   
-        if not data or 'workout' not in data:
-            return jsonify({
-                "status": "error", 
-                "message": "Invalid workout data"
-            }), 400
-        
- 
-        workouts_ref = db.collection('users').document(current_user.id).collection('workouts')
-        
-  
-        new_workout_ref = workouts_ref.add({
-            **data['workout'],
-            'created_at': firestore.SERVER_TIMESTAMP
-        })
-        
-        return jsonify({
-            "status": "success", 
-            "message": "Workout added successfully",
-            "workout_id": new_workout_ref[1].id
-        })
-    except Exception as e:
-        print(f"Error adding workout: {e}")
-        return jsonify({
-            "status": "error", 
-            "message": "Failed to add workout"
-        }), 500
-
 @app.route('/get-workouts')
 @firebase_login_required
 def get_workouts():
     try:
-    
-        workouts_ref = db.collection('users').document(current_user.id).collection('workouts')
+        # Get the user document
+        user_ref = db.collection('users').document(current_user.id)
+        user_doc = user_ref.get()
         
-     
-        workouts_docs = workouts_ref.stream()
- 
-        workouts = [
-            {**doc.to_dict(), 'id': doc.id} 
-            for doc in workouts_docs
-        ]
+        if not user_doc.exists:
+            return jsonify({
+                "status": "error",
+                "message": "User not found"
+            }), 404
+
+        # Get the exercise_info directly from the user document
+        user_data = user_doc.to_dict()
+        exercise_info = user_data.get('exercise_info', {})
         
-        return jsonify({
+        response_data = {
             "status": "success",
-            "workouts": workouts
-        })
+            "active_time": exercise_info.get('active_time', 0),
+            "calories_burned": exercise_info.get('calories_burned', 0),
+            "schedule": exercise_info.get('schedule', []),
+            "steps": exercise_info.get('steps', 0),
+            "todays_exercise": exercise_info.get('todays_exercise', {}),
+        }
+
+        print(response_data)
+
+        return jsonify(response_data)
+
     except Exception as e:
         print(f"Error fetching workouts: {e}")
         return jsonify({
@@ -651,7 +751,7 @@ def start_daily_reset_scheduler():
             schedule.run_pending()
             time.sleep(1)
 
-
+    
     scheduler_thread = threading.Thread(target=run_schedule, daemon=True)
     scheduler_thread.start()
 

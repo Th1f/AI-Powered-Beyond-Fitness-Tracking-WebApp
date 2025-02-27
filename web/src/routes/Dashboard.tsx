@@ -47,7 +47,6 @@ const Dashboard: React.FC = () => {
         setIsLoading(true);
         setError(null);  
         const data = await fetchUserData();
-        console.log("data fetched");
         setUserData(data);
       } catch (err) {
         setError('Failed to load user data');
@@ -80,8 +79,6 @@ const Dashboard: React.FC = () => {
       clearInterval(interval);
     };
   }, []);
-
-  console.log(userData?.user.diet_info);
 
   const workoutXAxis = generateRandomArray(6);
   const workoutSeries = generateRandomArray(6);

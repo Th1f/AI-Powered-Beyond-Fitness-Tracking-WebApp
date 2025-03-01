@@ -1,4 +1,4 @@
-# 🚀 Beyond - Fitness Tracking Web Application (On-Going)
+# 🚀 Beyond - AI Powered Fitness Tracking Web Application (On-Going)
 ## Tech Stack
 - Infrastructure: Firebase + Google Cloud
 - AI Model: Gemini 1.5 Flash

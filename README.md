@@ -35,6 +35,11 @@ Trained AI will generate workouts according to the user's split
 ### Apple Health and Google Fit Integration
 **Coming Soon**
 
+## Usage
+1. Create an account
+2. Add food to your calorie tracker manually or ask sprite to add it
+3. Generate workout plan with sprite
+
 ## Want to run this localy ?
 1. Clone this repository
 3. Direct to the backend folder ``server/`` and run the virtual enviroment by runnning ``./venv/Scripts/activate``

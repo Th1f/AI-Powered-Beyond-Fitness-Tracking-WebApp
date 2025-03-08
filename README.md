@@ -1,5 +1,6 @@
 # 🚀 Beyond - AI Powered Fitness Tracking Web Application (On-Going)
 ## Tech Stack
+[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-886FBF?logo=googlegemini&logoColor=fff)](#)[![Firebase](https://img.shields.io/badge/Firebase-039BE5?logo=Firebase&logoColor=white)](#)[![Google Cloud](https://img.shields.io/badge/Google%20Cloud-%234285F4.svg?logo=google-cloud&logoColor=white)](#)[![Flask](https://img.shields.io/badge/Flask-000?logo=flask&logoColor=fff)](#)[![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)](#)[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](#)[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff)](#)[![HTML](https://img.shields.io/badge/HTML-%23E34F26.svg?logo=html5&logoColor=white)](#)[![CSS](https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=fff)](#)
 - Infrastructure: Firebase + Google Cloud
 - AI Model: Gemini 1.5 Flash
 - Dataset Source: Kaggle
